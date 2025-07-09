@@ -2,10 +2,13 @@ import requests
 import argparse
 import sys
 import os
+import time
 
 def download(url, filename, directory):
     data = requests.get(url).content
-    with open(f"{directory}/{filename}", 'wb') as f:
+    filename_inter = os.path.join(directory, filename)
+    filename_final = os.path.join(directory, str(int(time.time())) + "-" + filename) if os.path.exists(filename_inter) else filename_inter
+    with open(filename_final, 'wb') as f:
         f.write(data)
 
 def main():
